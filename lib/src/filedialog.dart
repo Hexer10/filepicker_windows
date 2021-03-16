@@ -132,13 +132,13 @@ abstract class FileDialog {
     publicMusicFolder.setGUID(folderGUID);
 
     final ppkf = malloc.call<IntPtr>();
-    hr = knownFolderManager.GetFolder(publicMusicFolder.addressOf, ppkf);
+    hr = knownFolderManager.GetFolder(publicMusicFolder.addressOf, ppkf.cast());
     if (FAILED(hr)) throw WindowsException(hr);
     final knownFolder = IKnownFolder(ppkf.cast());
 
     final psi = malloc.call<IntPtr>();
     final riid = convertToIID(IID_IShellItem);
-    hr = knownFolder.GetShellItem(0, riid, psi);
+    hr = knownFolder.GetShellItem(0, riid, psi.cast());
     if (FAILED(hr)) throw WindowsException(hr);
     final shellItem = IShellItem(psi.cast());
 

@@ -70,7 +70,7 @@ class DirectoryPicker extends FileDialog {
       }
     } else {
       final ppsi = malloc.call<IntPtr>();
-      hr = dialog.GetResult(ppsi);
+      hr = dialog.GetResult(ppsi.cast());
       if (FAILED(hr)) throw WindowsException(hr);
 
       final item = IShellItem(ppsi.cast());

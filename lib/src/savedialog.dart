@@ -82,7 +82,7 @@ class SaveFilePicker extends FileDialog {
       }
     } else {
       final ppsi = malloc.call<IntPtr>();
-      hr = fileDialog.GetResult(ppsi);
+      hr = fileDialog.GetResult(ppsi.cast());
       if (!SUCCEEDED(hr)) throw WindowsException(hr);
 
       final item = IShellItem(ppsi.cast());
@@ -92,7 +92,7 @@ class SaveFilePicker extends FileDialog {
 
       final pathPtr = Pointer<Utf16>.fromAddress(pathPtrPtr.value);
       // MAX_PATH is a slight hack here, since this could be longer.
-      filePath = pathPtr.unpackString(MAX_PATH);
+      filePath = pathPtr.toDartString(length: MAX_PATH);
 
       hr = item.Release();
       if (!SUCCEEDED(hr)) throw WindowsException(hr);

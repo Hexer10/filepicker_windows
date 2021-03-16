@@ -113,7 +113,7 @@ class OpenFilePicker extends FileDialog {
       }
     } else {
       final ppsi = malloc.call<IntPtr>();
-      hr = fileDialog.GetResult(ppsi);
+      hr = fileDialog.GetResult(ppsi.cast());
       if (FAILED(hr)) throw WindowsException(hr);
 
       final item = IShellItem(ppsi.cast());
@@ -126,7 +126,7 @@ class OpenFilePicker extends FileDialog {
       // long file paths and the user selects a path with length > MAX_PATH
       // characters, it could be longer. In this case, the file name will be
       // truncated.
-      filePath = pathPtr.unpackString(MAX_PATH);
+      filePath = pathPtr.toDartString(length: MAX_PATH);
 
       hr = item.Release();
       if (FAILED(hr)) throw WindowsException(hr);
